@@ -8,7 +8,14 @@ data class Timelog(val tasks: List<Task>) {
     }
 }
 
-data class Range(val lower: LocalDateTime, val upper: LocalDateTime)
-data class Task(val timestamp: LocalDateTime, val category: Category, val description: String, val tags: List<Tag>)
-data class Category(val value: String)
+data class Task(val timestamp: LocalDateTime, val category: Category, val description: Description, val tags: List<Tag>)
+
+data class Description(val value: String)
+
+data class Category(val value: String) {
+    companion object {
+        fun emptyCategory(): Category = Category("")
+    }
+}
+
 data class Tag(val value: String)
