@@ -1,6 +1,7 @@
 package infrastructure.spi.file
 
 import domain.*
+import domain.Kind.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -24,10 +25,10 @@ internal class FileTimeloadLoaderTest() {
 
 
         assertThat(timelog).isEqualTo(Timelog(listOf(
-            Task(LocalDateTime.of(2022, 6, 6, 8, 45), Category.emptyCategory(), Description("arrived"), emptyList()),
-            Task(LocalDateTime.of(2022, 6, 6, 13, 0), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev"))),
-            Task(LocalDateTime.of(2022, 6, 6, 14, 0), Category.emptyCategory(), Description("lunch"), listOf(Tag("lunch"))),
-            Task(LocalDateTime.of(2022, 6, 6, 18, 15), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev"))),
+            Task(LocalDateTime.of(2022, 6, 6, 8, 45), Category.emptyCategory(), Description("arrived"), emptyList(), WORK),
+            Task(LocalDateTime.of(2022, 6, 6, 13, 0), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev")), WORK),
+            Task(LocalDateTime.of(2022, 6, 6, 14, 0), Category.emptyCategory(), Description("lunch"), listOf(Tag("lunch")), WORK),
+            Task(LocalDateTime.of(2022, 6, 6, 18, 15), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev")), WORK),
         )))
     }
 
@@ -47,10 +48,10 @@ internal class FileTimeloadLoaderTest() {
 
 
         assertThat(timelog).isEqualTo(Timelog(listOf(
-            Task(LocalDateTime.of(2022, 6, 6, 8, 45), Category.emptyCategory(), Description("arrived"), emptyList()),
-            Task(LocalDateTime.of(2022, 6, 6, 13, 0), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev"))),
-            Task(LocalDateTime.of(2022, 6, 7, 14, 0), Category.emptyCategory(), Description("lunch"), listOf(Tag("lunch"))),
-            Task(LocalDateTime.of(2022, 6, 7, 18, 15), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev"))),
+            Task(LocalDateTime.of(2022, 6, 6, 8, 45), Category.emptyCategory(), Description("arrived"), emptyList(), WORK),
+            Task(LocalDateTime.of(2022, 6, 6, 13, 0), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev")), WORK),
+            Task(LocalDateTime.of(2022, 6, 7, 14, 0), Category.emptyCategory(), Description("lunch"), listOf(Tag("lunch")), WORK),
+            Task(LocalDateTime.of(2022, 6, 7, 18, 15), Category.emptyCategory(), Description("pair programming"), listOf(Tag("work"), Tag("dev")), WORK),
         )))
     }
 }

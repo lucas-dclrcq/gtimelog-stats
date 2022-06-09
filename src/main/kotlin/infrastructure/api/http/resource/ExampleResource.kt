@@ -1,4 +1,4 @@
-package infrastructure.api.http
+package infrastructure.api.http.resource
 
 import javax.ws.rs.GET
 import javax.ws.rs.Path

@@ -1,5 +1,6 @@
 package domain
 
+import domain.Kind.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
@@ -17,7 +18,8 @@ class TimelogParserKtTest {
                 LocalDateTime.of(2022, 6, 7, 9, 15),
                 Category.emptyCategory(),
                 Description("test"),
-                emptyList()
+                emptyList(),
+                WORK
             )
         )
 
@@ -35,7 +37,8 @@ class TimelogParserKtTest {
                 LocalDateTime.of(2022, 6, 7, 9, 15),
                 Category("category"),
                 Description("test"),
-                emptyList()
+                emptyList(),
+                WORK
             )
         )
     }
@@ -52,7 +55,8 @@ class TimelogParserKtTest {
                 LocalDateTime.of(2022, 6, 7, 9, 15),
                 Category("category"),
                 Description("test"),
-                listOf(Tag("tag1"), Tag("tag2"))
+                listOf(Tag("tag1"), Tag("tag2")),
+                WORK
             )
         )
     }
@@ -69,7 +73,44 @@ class TimelogParserKtTest {
                 LocalDateTime.of(2022, 6, 7, 9, 15),
                 Category.emptyCategory(),
                 Description("test"),
-                listOf(Tag("tag1"), Tag("tag2"))
+                listOf(Tag("tag1"), Tag("tag2")),
+                WORK
+            )
+        )
+    }
+
+    @Test
+    fun `should parse omitted task`() {
+        val rawTask = "2022-06-07 09:15: test ***"
+
+        val timelog = parseTimeLog(listOf(rawTask))
+
+        assertThat(timelog.tasks).hasSize(1)
+        assertThat(timelog.tasks.first()).isEqualTo(
+            Task(
+                LocalDateTime.of(2022, 6, 7, 9, 15),
+                Category.emptyCategory(),
+                Description("test"),
+                emptyList(),
+                OMITTED
+            )
+        )
+    }
+
+    @Test
+    fun `should parse non work related task`() {
+        val rawTask = "2022-06-07 09:15: test **"
+
+        val timelog = parseTimeLog(listOf(rawTask))
+
+        assertThat(timelog.tasks).hasSize(1)
+        assertThat(timelog.tasks.first()).isEqualTo(
+            Task(
+                LocalDateTime.of(2022, 6, 7, 9, 15),
+                Category.emptyCategory(),
+                Description("test"),
+                emptyList(),
+                NON_WORK
             )
         )
     }
